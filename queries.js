@@ -7,7 +7,7 @@ var options = {
 
 var pgp = require('pg-promise')(options);
 var db = pgp({    
-    host: process.env.DB_HOST,
+    host: process.env.HEROKU_POSTGRESQL_BLACK_URL,
     port: process.env.DB_PORT,
     database: process.env.DB_NAME,
     user: process.env.DB_USER,       
