@@ -6,11 +6,8 @@ CREATE DATABASE coupons;
 CREATE TABLE coupon (
   ID SERIAL NOT NULL PRIMARY KEY,
   number INT NOT NULL,
-  used BIT(1) NOT NULL
+  used BIT(1) DEFAULT B'0'
 );
 
-INSERT INTO coupon (number, used)
-  VALUES (123, B'0');
-
-
-
+INSERT INTO coupon (number)
+  VALUES (123);

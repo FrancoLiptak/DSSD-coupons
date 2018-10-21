@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../queries');
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'DSSD - COUPONS' });
 });
 
 router.get('/api/v1.0/coupons', db.getAllCoupons);
