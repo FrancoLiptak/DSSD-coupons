@@ -26,13 +26,31 @@ Elegimos Heroku como servicio para exponer nuestra API por su facilidad de uso y
 
 - Ejemplo de uso:
 
+~~~~
 curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons
+~~~~
+
+También es posible pasar dos parámetros:
+
+- Parámetro filter, arreglo que en su interior posee todos los criterios de filtro (json). Cada criterio debe indicar field(campo a analizar) operator(operador a usar) y value(valor que se busca).
+
+- Parámetro pagination, json que en su interior indica limit(límite) y puede indicar o no offset(a partir de cual producto se empiezan a devolver productos).
+
+- Ejemplo de uso:
+
+~~~~
+curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons?filter=[{"field":"used","operator":"=","value":0}]
+
+curl http://http://dssd-coupons.herokuapp.com/api/v1.0/coupons?pagination={%22offset%22:0,%22limit%22:2}
+~~~~
 
 **GET /api/v1.0/coupons/:id** - Devuelve el cupón que se indica por el parámetro numérico *id*.
 
 - Ejemplo de uso:
 
+~~~~
 curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons/1
+~~~~
 
 **POST /api/v1.0/coupons** - Permite la creación de un cupón. Es necesario pasarle dos parámetros:
 
@@ -41,16 +59,22 @@ curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons/1
 
 - Ejemplo de uso:
 
-curl -X POST --data "number=123&used=B"0"" http://dssd-coupons.herokuapp.com/api/v1.0/coupons
+~~~~
+curl -X POST --data "number=123" http://dssd-coupons.herokuapp.com/api/v1.0/coupons
+~~~~
 
 **PUT /api/v1.0/coupons/:id** - Permite actualizar un cupón. Los campos que se permiten modificar son los mismos que los nombrados anteriormente.
 
 - Ejemplo de uso:
 
+~~~~
 curl -X PUT --data "number=1234&used=B"0"" http://dssd-coupons.herokuapp.com/api/v1.0/coupons/2
+~~~~
 
-**DELETE /api/v1.0/coupons/:id** - Permite eliminar un cupón.
+**DELETE /api/v1.0/coupons/:id** - Permite eliminar un cupón. Vale aclarar que se utiliza borrado lógico.
 
 - Ejemplo de uso:
 
+~~~~
 curl -X DELETE http:/dssd-coupons.herokuapp.com/api/v1.0/coupons/3
+~~~~

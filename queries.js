@@ -30,6 +30,8 @@ function getAllCoupons(req, res, next) {
     sql += paginationResult.query;
   }
 
+  console.log(sql);
+
   db.any(sql)
     .then(function (data) {
       let responseCode = 500;
@@ -161,7 +163,7 @@ function removeCoupon(req, res, next) {
 
 // let's filter
 function filteringQuery(filter) {
-  let query = ` WHERE`;
+  let query = ` AND`; // El WHERE se pone en getAllCoupons() o getSingleElement().
   filter = JSON.parse(filter);
   filter.forEach(f => {
     query += ` ${f.field} ${f.operator} '${f.value}' AND`;
