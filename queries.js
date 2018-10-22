@@ -30,8 +30,6 @@ function getAllCoupons(req, res, next) {
     sql += paginationResult.query;
   }
 
-  console.log(sql);
-
   db.any(sql)
     .then(function (data) {
       let responseCode = 500;
