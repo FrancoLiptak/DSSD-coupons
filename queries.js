@@ -17,7 +17,7 @@ var db = pgp({
 // add query functions
 
 function getAllCoupons(req, res, next) {
-  let sql = 'select * from coupon';
+  let sql = 'select id, number, used from coupon where deleted = false';
   const filter = req.query.filter;
   const pagination = req.query.pagination;
   let paginationData;
@@ -51,7 +51,6 @@ function getAllCoupons(req, res, next) {
         responseCode = 404;
         response = {
           status: 'resource not found',
-          data: data,
           messsage: 'No coupons retrieved ',
           paginationData: paginationData || null
         };
@@ -65,7 +64,7 @@ function getAllCoupons(req, res, next) {
 }
 
 function getSingleElement(id, callback) {
-  db.one('select * from coupon where id = $1', id)
+  db.one('select id, number, used from coupon where id = $1 and deleted = false', id)
     .then(
       (data) => {
         callback(data);
@@ -82,7 +81,7 @@ function getSingleElement(id, callback) {
 function getSingleCoupon(req, res, next) {
   var couponID = parseInt(req.params.id);
 
-  getSingleElement(couponID, (data) => {
+  getSingleElement(couponID, next, (data) => {
     let responseCode = 500;
     let response = {};
     if (data.code == undefined) {
@@ -103,51 +102,61 @@ function getSingleCoupon(req, res, next) {
   })
 }
 
+function writeData(sql, value, callback) {
+  db.none(sql, value)
+    .then(
+      (data) => {
+        callback(data);
+      }
+    )
+    .catch(
+      (err) => {
+        callback(err);
+      }
+    )
+}
+
+function createResponse(data, res, actionName) {
+  let responseCode = 500;
+  let response = {};
+  if (data.name == 'error') {
+    responseCode = 400;
+    response = {
+      status: 'error',
+      data : data,
+      message: 'Bad Request'
+    }
+  } else {
+    responseCode = 200;
+    response = {
+      status: 'success',
+      message: `${actionName} one coupon`
+    }
+  }
+  res.status(responseCode).json(response);
+}
+
 function createCoupon(req, res, next) {
-  db.none('insert into coupon (number)' +
-    'values(${number})',
-    req.body)
-    .then(function () {
-      res.status(200)
-        .json({
-          status: 'success',
-          message: 'Inserted one coupon'
-        });
-    })
-    .catch(function (err) {
-      console.log(err.name);
-      return next(err);
-    });
+  const sql = 'insert into coupon (number)' + 'values(${number})';
+  writeData(sql, req.body, (data) => {
+    createResponse(data, res, 'created');
+  })
 }
 
 function updateCoupon(req, res, next) {
-  db.none('update coupon set number=$1, used=$2 where id=$3',
-    [req.body.number, req.body.used, parseInt(req.params.id)])
-    .then(function () {
-      res.status(200)
-        .json({
-          status: 'success',
-          message: 'Updated coupon'
-        });
-    })
-    .catch(function (err) {
-      return next(err);
-    });
+  const sql = 'update coupon set number=$1, used=$2 where id=$3';
+  const value = [req.body.number, req.body.used, parseInt(req.params.id)];
+  writeData(sql, value, (data) => {
+    createResponse(data, res, 'updated');
+  })
 }
 
 function removeCoupon(req, res, next) {
-  var couponID = parseInt(req.params.id);
-  db.result('delete from coupon where id = $1', couponID)
-    .then(function (result) {
-      res.status(200)
-        .json({
-          status: 'success',
-          message: `Removed ${result.rowCount} coupon`
-        });
-    })
-    .catch(function (err) {
-      return next(err);
-    });
+  const sql = 'update coupon set deleted=$1 where id=$2';
+  const value = [true, parseInt(req.params.id)];
+  writeData(sql, value, (data) => {
+    createResponse(data, res, 'removed');
+  })
 }
 
 // let's filter

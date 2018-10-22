@@ -6,7 +6,8 @@ CREATE DATABASE coupons;
 CREATE TABLE coupon (
   ID SERIAL NOT NULL PRIMARY KEY,
   number INT NOT NULL,
-  used BIT(1) DEFAULT B'0'
+  used BIT(1) DEFAULT B'0',
+  deleted BOOLEAN DEFAULT false
 );
 
 INSERT INTO coupon (number)
