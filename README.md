@@ -1,6 +1,10 @@
 # Supermarket-DSSD | 2018 | Etapa 2
 
-#### Grupo 1: Liptak, Franco Emanuel | Onofri, Camila Ayelén | Raimondi, Sebastián
+## Grupo 1: 
+
+- Liptak, Franco Emanuel
+- Onofri, Camila Ayelén
+- Raimondi, Sebastián
 
 ## Alojamiento del servicio
 
