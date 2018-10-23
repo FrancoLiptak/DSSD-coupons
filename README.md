@@ -41,9 +41,9 @@ También es posible pasar dos parámetros:
 ~~~~
 curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons?filter=[{"field":"used","operator":"=","value":0}]
 
-curl http://http://dssd-coupons.herokuapp.com/api/v1.0/coupons?pagination={%22offset%22:0,%22limit%22:2}
+curl http://http://dssd-coupons.herokuapp.com/api/v1.0/coupons?pagination={"offset":0,"limit":2}
 
-curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons?pagination={%22offset%22:0,%22limit%22:2}&filter=[{%22field%22:%22used%22,%22operator%22:%22=%22,%22value%22:1}]
+curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons?pagination={"offset":0,"limit":2}&filter=[{"field":"used","operator":"=","value":1}]
 ~~~~
 
 **GET /api/v1.0/coupons/:id** - Devuelve el cupón que se indica por el parámetro numérico *id*.
