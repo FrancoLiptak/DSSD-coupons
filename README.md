@@ -12,6 +12,7 @@ Al igual que en la primer entrega, el grupo eligió trabajar con Express (intrae
 Todas esas ventajas provocaron que decidamos volver a usar la tecnología para esta segunda entrega.
 
 La base de datos utilizada es PostgreSQL, ya que decidimos deployar nuestra API en Heroku (Heroku solo ofrece PostgreSQL como motor de bases de datos gratuito).
+
 Elegimos Heroku como servicio para exponer nuestra API por su facilidad de uso y buen rendimiento. Además, el grupo ya tenía experiencia usándolo.
 
 ## Endpoints
@@ -45,17 +46,14 @@ curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons?pagination={"offset":0,"
 curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons/1
 ~~~~
 
-**POST /api/v1.0/coupons** - Permite la creación de un cupón. Es necesario pasarle dos parámetros:
-
-- Number: Número de cupón.
-- Used: Flag que indica si el cupón fue usado o no.
+**POST /api/v1.0/coupons** - Permite la creación de un cupón. Es necesario pasarle el parámetro 'number', el cual simboliza el número de cupón.
 
 - Ejemplo de uso:
 ~~~~
 curl -X POST --data "number=123" http://dssd-coupons.herokuapp.com/api/v1.0/coupons
 ~~~~
 
-**PUT /api/v1.0/coupons/:id** - Permite actualizar un cupón. Los campos que se permiten modificar son los mismos que los nombrados anteriormente.
+**PUT /api/v1.0/coupons/:id** - Permite actualizar un cupón. Los campos que se permiten modificar son 'number' y 'used', el cual indica si el cupón fue utilizado o no.
 
 - Ejemplo de uso:
 ~~~~
