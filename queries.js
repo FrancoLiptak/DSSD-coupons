@@ -64,7 +64,7 @@ function getAllCoupons(req, res, next) {
 }
 
 function getSingleElement(id, callback) {
-  db.one('select id, number, used from coupon where id = $1 and deleted = false', id)
+  db.one('select id, number, used from coupon where deleted = false and id = $1', id)
     .then(
       (data) => {
         callback(data);
@@ -81,7 +81,7 @@ function getSingleElement(id, callback) {
 function getSingleCoupon(req, res, next) {
   var couponID = parseInt(req.params.id);
 
-  getSingleElement(couponID, next, (data) => {
+  getSingleElement(couponID, (data) => {
     let responseCode = 500;
     let response = {};
     if (data.code == undefined) {
