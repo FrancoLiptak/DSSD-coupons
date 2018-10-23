@@ -103,7 +103,7 @@ function getSingleCoupon(req, res, next) {
 }
 
 function writeData(sql, value, callback) {
-  db.none(sql, value)
+  db.result(sql, value)
     .then(
       (data) => {
         callback(data);
@@ -119,11 +119,10 @@ function writeData(sql, value, callback) {
 function createResponse(data, res, actionName) {
   let responseCode = 500;
   let response = {};
-  if (data.name == 'error') {
+  if (data.name == 'error' || data.rowCount == 0) {
     responseCode = 400;
     response = {
       status: 'error',
-      data : data,
       message: 'Bad Request'
     }
   } else {
