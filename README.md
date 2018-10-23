@@ -41,7 +41,7 @@ También es posible pasar dos parámetros:
 ~~~~
 curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons?filter=[{"field":"used","operator":"=","value":0}]
 
-curl http://http://dssd-coupons.herokuapp.com/api/v1.0/coupons?pagination={"offset":0,"limit":2}
+curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons?pagination={"offset":0,"limit":2}
 
 curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons?pagination={"offset":0,"limit":2}&filter=[{"field":"used","operator":"=","value":1}]
 ~~~~
