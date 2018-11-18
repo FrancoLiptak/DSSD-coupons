@@ -17,7 +17,7 @@ var db = pgp({
 // add query functions
 
 function getAllCoupons(req, res, next) {
-  let sql = 'select id, number, used from coupon where deleted = false';
+  let sql = 'select id, number, used, discount from coupon where deleted = false';
   const filter = req.query.filter;
   const pagination = req.query.pagination;
   let paginationData;
@@ -64,7 +64,7 @@ function getAllCoupons(req, res, next) {
 }
 
 function getSingleElement(id, callback) {
-  db.one('select id, number, used from coupon where deleted = false and id = $1', id)
+  db.one('select id, number, used, discount from coupon where deleted = false and id = $1', id)
     .then(
       (data) => {
         callback(data);
@@ -136,15 +136,16 @@ function createResponse(data, res, actionName) {
 }
 
 function createCoupon(req, res, next) {
-  const sql = 'insert into coupon (number)' + 'values(${number})';
-  writeData(sql, req.body, (data) => {
+  const sql = 'insert into coupon (number, discount)' + 'values($1, $2)';
+  const value = [req.body.number, req.body.discount];
+  writeData(sql, value, (data) => {
     createResponse(data, res, 'created');
   })
 }
 
 function updateCoupon(req, res, next) {
-  const sql = 'update coupon set number=$1, used=$2 where id=$3';
-  const value = [req.body.number, req.body.used, parseInt(req.params.id)];
+  const sql = 'update coupon set number=$1, used=$2, discount=$3 where id=$4';
+  const value = [req.body.number, req.body.used, req.body.discount, parseInt(req.params.id)];
   writeData(sql, value, (data) => {
     createResponse(data, res, 'updated');
   })
