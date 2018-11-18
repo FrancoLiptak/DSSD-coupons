@@ -50,18 +50,18 @@ curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons?pagination={"offset":0,"
 curl http://dssd-coupons.herokuapp.com/api/v1.0/coupons/1
 ~~~~
 
-**POST /api/v1.0/coupons** - Permite la creación de un cupón. Es necesario pasarle el parámetro 'number', el cual simboliza el número de cupón.
+**POST /api/v1.0/coupons** - Permite la creación de un cupón. Es necesario pasarle el parámetro 'number', el cual simboliza el número de cupón, y también 'discount_percentage'.
 
 - Ejemplo de uso:
 ~~~~
-curl -X POST --data "number=123" http://dssd-coupons.herokuapp.com/api/v1.0/coupons
+curl -X POST --data "number=123&discount_percentage=20" http://dssd-coupons.herokuapp.com/api/v1.0/coupons
 ~~~~
 
-**PUT /api/v1.0/coupons/:id** - Permite actualizar un cupón. Los campos que se permiten modificar son 'number' y 'used', el cual indica si el cupón fue utilizado o no.
+**PUT /api/v1.0/coupons/:id** - Permite actualizar un cupón. Los campos que se permiten modificar son 'number', 'discount_percentage' y 'used', el cual indica si el cupón fue utilizado o no.
 
 - Ejemplo de uso:
 ~~~~
-curl -X PUT --data "number=1234&used=B"0"" http://dssd-coupons.herokuapp.com/api/v1.0/coupons/2
+curl -X PUT --data "number=1234&used=B"1"&discount_percentage=5" http://dssd-coupons.herokuapp.com/api/v1.0/coupons/2
 ~~~~
 
 **DELETE /api/v1.0/coupons/:id** - Permite eliminar un cupón. Vale aclarar que se utiliza borrado lógico.
