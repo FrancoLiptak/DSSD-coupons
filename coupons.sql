@@ -5,7 +5,7 @@ CREATE DATABASE coupons;
 
 CREATE TABLE coupon (
   ID SERIAL NOT NULL PRIMARY KEY,
-  number INT NOT NULL,
+  number INT NOT NULL UNIQUE,
   used BIT(1) DEFAULT B'0',
   deleted BOOLEAN DEFAULT false,
   discount_percentage FLOAT NOT NULL
