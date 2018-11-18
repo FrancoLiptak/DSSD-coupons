@@ -64,7 +64,7 @@ function getAllCoupons(req, res, next) {
 }
 
 function getSingleElement(id, callback) {
-  db.one('select id, number, used, discount_percentage from coupon where deleted = false and id = $1', id)
+  db.one('select id, number, used, discount_percentage from coupon where deleted = false and (id = $1 or number=$1)', id)
     .then(
       (data) => {
         callback(data);
@@ -78,10 +78,18 @@ function getSingleElement(id, callback) {
 
 }
 
-function getSingleCoupon(req, res, next) {
-  var couponID = parseInt(req.params.id);
+function getSingleCouponByNumber(req, res, next){
+  const couponNumber = parseInt(req.params.number);
+  getSingleCoupon(couponNumber, res);
+}
 
-  getSingleElement(couponID, (data) => {
+function getSingleCouponById(req, res, next){
+  const couponId = parseInt(req.params.id);
+  getSingleCoupon(couponId, res);
+}
+
+function getSingleCoupon(value, res) {
+  getSingleElement(value, (data) => {
     let responseCode = 500;
     let response = {};
     if (data.code == undefined) {
@@ -185,7 +193,8 @@ function paginationQuery(pagination) {
 
 module.exports = {
   getAllCoupons: getAllCoupons,
-  getSingleCoupon: getSingleCoupon,
+  getSingleCouponById: getSingleCouponById,
+  getSingleCouponByNumber: getSingleCouponByNumber,
   createCoupon: createCoupon,
   updateCoupon: updateCoupon,
   removeCoupon: removeCoupon
