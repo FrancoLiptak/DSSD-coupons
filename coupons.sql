@@ -8,8 +8,8 @@ CREATE TABLE coupon (
   number INT NOT NULL,
   used BIT(1) DEFAULT B'0',
   deleted BOOLEAN DEFAULT false,
-  discount FLOAT NOT NULL
+  discount_percentage FLOAT NOT NULL
 );
 
-INSERT INTO coupon (number, discount)
+INSERT INTO coupon (number, discount_percentage)
   VALUES (123, 10);
